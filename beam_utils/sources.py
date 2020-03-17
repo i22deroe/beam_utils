@@ -39,7 +39,6 @@ class JsonLinesFileSource(beam.io.filebasedsource.FileBasedSource):
 
 class CsvFileSource(beam.io.filebasedsource.FileBasedSource):
   """ A source for a GCS or local comma-separated-file
-
   Parses a text file assuming newline-delimited lines,
   and comma-delimited fields. Assumes UTF-8 encoding.
   """
@@ -49,7 +48,6 @@ class CsvFileSource(beam.io.filebasedsource.FileBasedSource):
                delimiter=',', header=True, dictionary_output=True,
                validate=True):
     """ Initialize a CSVFileSource.
-
     Args:
       delimiter: The delimiter character in the CSV file.
       header: Whether the input file has a header or not.
@@ -57,7 +55,6 @@ class CsvFileSource(beam.io.filebasedsource.FileBasedSource):
       dictionary_output: The kind of records that the CsvFileSource outputs.
         If True, then it will output dict()'s, if False it will output list()'s.
         Default: True
-
     Raises:
       ValueError: If the input arguments are not consistent.
     """
@@ -102,8 +99,8 @@ class _Fileobj2Iterator(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         line = self._obj.readline()
         if line == None or line == '':
             raise StopIteration
-        return line
+        return str(line)
